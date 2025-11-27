@@ -259,7 +259,7 @@ html[data-theme="dark"] .task-item {
   opacity: 0.5;
 }
 
-/* პატარა ჩასუნთქვა ქვედა ნაწილში */
+/* scrollbar */
 .list::-webkit-scrollbar {
   width: 6px;
 }
@@ -320,26 +320,21 @@ html[data-theme="dark"] .task-item {
   color: #4b5563;
 }
 
-/* ახალი დავალების ანიმაცია */
+/* ახალი დავალების ანიმაცია – ორივე თემაზე იმუშავებს */
 @keyframes task-pop {
   0% {
     transform: scale(0.96);
-    background: #ecfccb;
+    background: var(--accent-soft);
   }
   100% {
     transform: scale(1);
     background: rgba(255, 255, 255, 0.85);
   }
 }
-html[data-theme="dark"] @keyframes task-pop {
-  0% {
-    transform: scale(0.96);
-    background: #1f2937;
-  }
-  100% {
-    transform: scale(1);
-    background: rgba(15, 23, 42, 0.9);
-  }
+
+html[data-theme="dark"] .task-animate {
+  /* dark-ზე ფონის ფერი ისე გაიფერადოს, როგორც task-item-ია */
+  background: rgba(15, 23, 42, 0.9);
 }
 
 .task-animate {
@@ -352,26 +347,38 @@ html[data-theme="dark"] @keyframes task-pop {
 
 .details {
   margin-top: 10px;
-  padding: 8px 10px;
-  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--bg-card);
   font-size: 13px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 .details h3 {
-  margin: 0 0 6px 0;
-  font-size: 14px;
+  margin: 0 0 8px 0;
+  font-size: 16px;
   font-weight: 600;
 }
 
 .details p {
-  margin: 2px 0;
+  margin: 4px 0;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.details p:last-child {
+  border-bottom: none;
+}
+
+.details span {
+  font-weight: 500;
 }
 
 /* ფოტოები დეტალებში */
 #details-photos {
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .details-photos-row {
@@ -381,17 +388,19 @@ html[data-theme="dark"] @keyframes task-pop {
   margin-top: 4px;
 }
 
-.details-photo-thumb {
+.details-photo-thumb,
+#details-photos img {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   cursor: pointer;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.details-photo-thumb:hover {
+.details-photo-thumb:hover,
+#details-photos img:hover {
   transform: scale(1.08);
   box-shadow: 0 6px 14px rgba(15, 23, 42, 0.5);
 }
@@ -527,10 +536,10 @@ html[data-theme="dark"] @keyframes task-pop {
 }
 
 /* =========================
-   RESPONSIVE – MOBILE FIRST
+   RESPONSIVE – MOBILE
    ========================= */
 
-/* პატარა ეკრანების (მობილური) მორგება */
+/* Tablet / პატარა ლეპტოპი */
 @media (max-width: 900px) {
   main {
     padding: 8px;
@@ -538,6 +547,7 @@ html[data-theme="dark"] @keyframes task-pop {
 
   .layout {
     flex-direction: column;
+    gap: 12px;
   }
 
   .layout > .card:first-of-type,
@@ -549,15 +559,27 @@ html[data-theme="dark"] @keyframes task-pop {
   .list {
     max-height: 260px;
   }
+
+  /* დეტალები ოდნავ კომპაქტური */
+  .details {
+    padding: 12px 14px;
+  }
 }
 
+/* მობილური */
 @media (max-width: 600px) {
   header {
     padding: 8px 10px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   header span {
     font-size: 14px;
+  }
+
+  .theme-toggle-btn {
+    margin-top: 6px;
   }
 
   .card {
@@ -594,7 +616,7 @@ html[data-theme="dark"] @keyframes task-pop {
   }
 }
 
-/* ძალიან პატარა ეკრანები (მადლებიანი ტელეფონი) */
+/* ძალიან პატარა ეკრანები */
 @media (max-width: 400px) {
   header span {
     font-size: 13px;
@@ -609,107 +631,3 @@ html[data-theme="dark"] @keyframes task-pop {
     font-size: 10px;
   }
 }
-
-/* --- MOBILE LAYOUT FIX --- */
-@media (max-width: 900px) {
-    .layout {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    section.card {
-        width: 100% !important;
-    }
-
-    .form-grid, 
-    .form-row-inline {
-        display: block !important;
-    }
-
-    .form-col {
-        width: 100% !important;
-        margin-bottom: 10px;
-    }
-
-    #task-list {
-        max-height: 300px;
-        overflow-y: auto;
-    }
-
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-        height: auto;
-        padding: 12px 16px;
-    }
-
-    header button#theme-toggle {
-        margin-top: 8px;
-    }
-}
-
-/* --- DETAILS CARD IMPROVED --- */
-
-.details {
-    background: var(--card-bg);
-    border-radius: 14px;
-    padding: 16px;
-    margin-top: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid var(--border-color);
-}
-
-.details h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    color: var(--text-strong);
-}
-
-.details p {
-    margin: 6px 0;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--text-normal);
-    font-size: 15px;
-}
-
-.details p:last-child {
-    border-bottom: none;
-}
-
-.details span {
-    font-weight: 500;
-    color: var(--text-strong);
-}
-
-#details-photos {
-    margin-top: 12px;
-}
-
-#details-photos img {
-    width: 95px;
-    height: 95px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-@media (max-width: 900px) {
-    .details {
-        padding: 12px 14px;
-    }
-
-    .details p {
-        font-size: 14px;
-        padding: 4px 0;
-    }
-
-    #details-photos img {
-        width: 80px;
-        height: 80px;
-    }
-}
-
