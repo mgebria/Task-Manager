@@ -649,4 +649,67 @@ html[data-theme="dark"] @keyframes task-pop {
     }
 }
 
+/* --- DETAILS CARD IMPROVED --- */
+
+.details {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid var(--border-color);
+}
+
+.details h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-strong);
+}
+
+.details p {
+    margin: 6px 0;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-normal);
+    font-size: 15px;
+}
+
+.details p:last-child {
+    border-bottom: none;
+}
+
+.details span {
+    font-weight: 500;
+    color: var(--text-strong);
+}
+
+#details-photos {
+    margin-top: 12px;
+}
+
+#details-photos img {
+    width: 95px;
+    height: 95px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 900px) {
+    .details {
+        padding: 12px 14px;
+    }
+
+    .details p {
+        font-size: 14px;
+        padding: 4px 0;
+    }
+
+    #details-photos img {
+        width: 80px;
+        height: 80px;
+    }
+}
 
