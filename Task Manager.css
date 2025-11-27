@@ -1,0 +1,611 @@
+/* =========================
+   ROOT & THEME VARIABLES
+   ========================= */
+
+:root {
+  --bg: #f3f4f6;
+  --bg-card: #ffffff;
+  --bg-header: #111827;
+  --bg-list: #f9fafb;
+
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-header: #f9fafb;
+
+  --border: #d1d5db;
+  --accent: #2563eb;
+  --accent-soft: #dbeafe;
+  --danger: #b91c1c;
+  --danger-soft: #fee2e2;
+
+  --badge-bg: #e5e7eb;
+  --badge-text: #111827;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --shadow-soft: 0 10px 20px rgba(15, 23, 42, 0.08);
+
+  --transition-fast: 0.15s ease;
+  --transition-med: 0.25s ease;
+}
+
+html[data-theme="dark"] {
+  --bg: #020617;
+  --bg-card: #020617;
+  --bg-header: #020617;
+  --bg-list: #020617;
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-header: #f9fafb;
+
+  --border: #1f2937;
+  --accent: #3b82f6;
+  --accent-soft: #1d2a3f;
+  --danger: #f97373;
+  --danger-soft: #451515;
+
+  --badge-bg: #111827;
+  --badge-text: #e5e7eb;
+}
+
+/* =========================
+   GLOBAL
+   ========================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--bg-header);
+  color: var(--text-header);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+header span {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.theme-toggle-btn {
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: transparent;
+  color: var(--text-header);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(15, 23, 42, 0.4);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   MAIN LAYOUT
+   ========================= */
+
+main {
+  flex: 1;
+  padding: 10px;
+}
+
+.layout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Desktop: ორი ბარათი გვერდიგვერდ */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* მარცხენა (სია) – ოდნავ ფართო, მარჯვენა (ფორმა) – ოდნავ ვიწრო */
+.layout > .card:first-of-type {
+  flex: 1.1;
+  min-width: 0;
+}
+
+.layout > .card:last-of-type {
+  flex: 0.9;
+  min-width: 0;
+}
+
+/* H2 სექციების სათაური */
+.card > h2 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =========================
+   FILTERS + LIST
+   ========================= */
+
+.filters-row,
+.filters-row2 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.filters-row label,
+.filters-row2 label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+}
+
+.filters-row input[type="text"],
+.small-input,
+.filters-row select,
+.filters-row2 select {
+  padding: 4px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+/* List container */
+.list {
+  flex: 1;
+  min-height: 150px;
+  max-height: 340px;
+  overflow-y: auto;
+  background: var(--bg-list);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 6px;
+}
+
+/* Task item ბლოკი / ჩარჩო */
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast),
+              border-color var(--transition-fast),
+              background var(--transition-fast);
+}
+
+html[data-theme="dark"] .task-item {
+  background: rgba(15, 23, 42, 0.9);
+}
+
+/* ჩარჩოს ფერები პრიორიტეტით */
+.task-item.priority-high {
+  border-color: #f97316;
+}
+.task-item.priority-normal {
+  border-color: #6366f1;
+}
+.task-item.priority-low {
+  border-color: #22c55e;
+}
+
+/* Hover/Selected */
+.task-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.18);
+}
+
+.task-item.selected {
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* Done / Deleted */
+.task-item.done .task-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+.task-item.deleted {
+  opacity: 0.5;
+}
+
+/* პატარა ჩასუნთქვა ქვედა ნაწილში */
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+.list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.8);
+  border-radius: 999px;
+}
+
+/* Task content */
+.task-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.task-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  word-break: break-word;
+}
+
+.task-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  word-break: break-word;
+}
+
+/* Badge */
+.badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--badge-bg);
+  color: var(--badge-text);
+  white-space: nowrap;
+}
+
+.badge.high {
+  background: #f97316;
+  color: #111827;
+}
+.badge.low {
+  background: #bbf7d0;
+  color: #14532d;
+}
+.badge.overdue {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.badge.done {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badge.deleted {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+/* ახალი დავალების ანიმაცია */
+@keyframes task-pop {
+  0% {
+    transform: scale(0.96);
+    background: #ecfccb;
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+html[data-theme="dark"] @keyframes task-pop {
+  0% {
+    transform: scale(0.96);
+    background: #1f2937;
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(15, 23, 42, 0.9);
+  }
+}
+
+.task-animate {
+  animation: task-pop 0.25s ease-out;
+}
+
+/* =========================
+   DETAILS
+   ========================= */
+
+.details {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  font-size: 13px;
+}
+
+.details h3 {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.details p {
+  margin: 2px 0;
+}
+
+/* ფოტოები დეტალებში */
+#details-photos {
+  margin-top: 8px;
+}
+
+.details-photos-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.details-photo-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.details-photo-thumb:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.5);
+}
+
+/* =========================
+   STATUS BAR
+   ========================= */
+
+.status-bar {
+  margin-top: 8px;
+  padding: 6px 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-radius: 6px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+/* =========================
+   FORM
+   ========================= */
+
+#task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+}
+
+.form-row label {
+  color: var(--text-muted);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  font-size: 13px;
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+.form-row textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* ორი ველი ერთ ხაზზე (საწყისი ვადა / დედლაინი) – Desktop-ზე */
+.form-row-inline {
+  flex-direction: row;
+  gap: 8px;
+}
+
+.form-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.buttons button {
+  flex: 1 1 calc(50% - 3px);
+  min-width: 120px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  border-radius: 999px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+              border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.btn-secondary:hover {
+  background: var(--accent-soft);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fee2e2;
+}
+.btn-danger:hover {
+  background: #7f1d1d;
+}
+
+/* Dashboard box */
+.dashboard {
+  margin-top: 10px !important;
+  padding: 8px 10px !important;
+  font-size: 13px;
+  background: var(--bg-card);
+}
+
+/* =========================
+   RESPONSIVE – MOBILE FIRST
+   ========================= */
+
+/* პატარა ეკრანების (მობილური) მორგება */
+@media (max-width: 900px) {
+  main {
+    padding: 8px;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+
+  .layout > .card:first-of-type,
+  .layout > .card:last-of-type {
+    flex: none;
+    width: 100%;
+  }
+
+  .list {
+    max-height: 260px;
+  }
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 8px 10px;
+  }
+
+  header span {
+    font-size: 14px;
+  }
+
+  .card {
+    padding: 10px 10px;
+  }
+
+  .filters-row,
+  .filters-row2 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-row label,
+  .filters-row2 label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .form-row-inline {
+    flex-direction: column;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .buttons button {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .list {
+    max-height: 230px;
+  }
+}
+
+/* ძალიან პატარა ეკრანები (მადლებიანი ტელეფონი) */
+@media (max-width: 400px) {
+  header span {
+    font-size: 13px;
+  }
+  .task-title {
+    font-size: 13px;
+  }
+  .task-meta {
+    font-size: 11px;
+  }
+  .badge {
+    font-size: 10px;
+  }
+}

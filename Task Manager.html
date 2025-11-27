@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ka" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager – სახურავის სამუშაოები (Web ვერსია)</title>
+  <link rel="stylesheet" href="Task%20Manager.css">
+</head>
+<body>
+<header>
+  <span>Task Manager – სახურავის სამუშაოები (Web ვერსია)</span>
+  <button id="theme-toggle" class="theme-toggle-btn">Dark</button>
+</header>
+<main>
+  <div class="layout">
+    <!-- მარცხენა – სია + დეტალები -->
+    <section class="card">
+      <h2>დავალებების სია</h2>
+
+      <div class="filters-row">
+        <label>
+          ძებნა:
+          <input type="text" id="search" class="small-input" placeholder="სათაური ან აღწერა">
+        </label>
+        <label>
+          დალაგება:
+          <select id="sort" class="small-input">
+            <option>დამატების რიგით</option>
+            <option>ვადით (ჯერ ადრე)</option>
+            <option>სტატუსით (აქტიური ზემოთ)</option>
+            <option>პრიორიტეტით</option>
+          </select>
+        </label>
+        <label>
+          <input type="checkbox" id="only-active">
+          მხოლოდ აქტიური
+        </label>
+        <label>
+          <input type="checkbox" id="show-deleted">
+          ნაგავი
+        </label>
+      </div>
+
+      <div class="filters-row2">
+        <label>
+          დრო:
+          <select id="date-filter" class="small-input">
+            <option value="all">ყველა</option>
+            <option value="today">დღეს</option>
+            <option value="week">ამ კვირაში</option>
+          </select>
+        </label>
+        <label>
+          პროექტი:
+          <select id="project-filter" class="small-input">
+            <option value="all">ყველა</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="list" id="task-list"></div>
+
+      <div class="details" id="details-box">
+        <h3>დეტალები</h3>
+        <p><strong>დასახელება:</strong> <span id="d-title">-</span></p>
+        <p><strong>საწყისი ვადა:</strong> <span id="d-start">-</span></p>
+        <p><strong>დედლაინი:</strong> <span id="d-due">-</span></p>
+        <p><strong>სტატუსი:</strong> <span id="d-status">-</span></p>
+        <p><strong>პროექტი:</strong> <span id="d-project">-</span></p>
+        <p><strong>პასუხისმგებელი:</strong> <span id="d-resp">-</span></p>
+        <p><strong>გამეორება:</strong> <span id="d-repeat">-</span></p>
+        <p><strong>აღწერა:</strong></p>
+        <p id="d-desc">-</p>
+      </div>
+
+      <div class="status-bar" id="status-bar">
+        დავალებები: 0 აქტიური / 0 დასრულებული / 0 სულ
+      </div>
+    </section>
+
+    <!-- მარჯვენა – ფორმა + dashboard -->
+    <section class="card">
+      <h2>ახალი დავალება / რედაქტირება</h2>
+      <form id="task-form" autocomplete="off">
+        <input type="hidden" id="task-id">
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="title">დასახელება:</label>
+            <input type="text" id="title" required>
+          </div>
+
+          <div class="form-row form-row-inline">
+            <div class="form-col">
+              <label for="start-date">საწყისი ვადა:</label>
+              <input type="date" id="start-date" required>
+            </div>
+            <div class="form-col">
+              <label for="due">დედლაინი:</label>
+              <input type="date" id="due" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="priority">პრიორიტეტი:</label>
+            <select id="priority" required>
+              <option value="low">დაბალი</option>
+              <option value="normal" selected>საშუალო</option>
+              <option value="high">მაღალი</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="project">პროექტი:</label>
+            <input type="text" id="project" placeholder="მაგ: სახურავი, კლიენტი X" required>
+          </div>
+
+          <div class="form-row">
+            <label for="responsible-name">პასუხისმგებელი პირი:</label>
+            <input type="text" id="responsible-name" placeholder="სახელი / გვარი" required>
+          </div>
+
+          <div class="form-row">
+            <label for="responsible-phone">ტელეფონის ნომერი (WhatsApp):</label>
+            <input type="text" id="responsible-phone" placeholder="+9955XXXXXXXX">
+          </div>
+
+          <div class="form-row">
+            <label for="repeat">გამეორება:</label>
+            <select id="repeat" required>
+              <option value="none">არა</option>
+              <option value="daily">ყოველდღე</option>
+              <option value="weekly">ყოველ კვირა</option>
+              <option value="monthly">ყოველ თვე</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="description">აღწერა:</label>
+            <textarea id="description" placeholder="დეტალები..." required></textarea>
+          </div>
+          <div class="form-row">
+            <label for="photos">ფოტო(ებ)ის დამატება:</label>
+              <input type="file" id="photos" accept="image/*" multiple>
+            </div>
+        </div>
+
+        <div class="buttons">
+          <button type="submit" class="btn-primary" id="save-btn">დავალების შენახვა</button>
+          <button type="button" class="btn-secondary" id="clear-btn">ფორმის გასუფთავება</button>
+          <button type="button" class="btn-secondary" id="toggle-done-btn">დასრულებული / აქტიური</button>
+          <button type="button" class="btn-danger" id="delete-btn">წაშლა / ნაგავში გადატანა</button>
+        </div>
+      </form>
+
+      <div class="card dashboard" style="margin-top:8px; padding:8px;">
+        <h2 style="margin-bottom:4px;">მიმოხილვა</h2>
+        <p id="dash-total"></p>
+        <p id="dash-overdue"></p>
+        <p id="dash-today"></p>
+        <p id="dash-week"></p>
+        <p id="dash-priority"></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="Task%20Manager.js"></script>
+</body>
+</html>
