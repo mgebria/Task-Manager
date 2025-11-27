@@ -643,3 +643,26 @@ html[data-theme="dark"] .task-animate {
   }
 }
 
+/* --- Fix: Checkbox filters closer together --- */
+.filters-row .checkbox-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    /* checkbox label-ები არ გაიწელოს მთელი სიგანით */
+    .filters-row label.checkbox-wrap {
+        width: auto !important;
+        display: inline-flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+    }
+
+    /* ერთმანეთს მიუახლოვდეს */
+    .filters-row {
+        gap: 6px !important;
+    }
+}
+
