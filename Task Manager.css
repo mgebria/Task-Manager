@@ -609,3 +609,42 @@ html[data-theme="dark"] @keyframes task-pop {
     font-size: 10px;
   }
 }
+
+/* --- MOBILE LAYOUT FIX --- */
+@media (max-width: 900px) {
+    .layout {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    section.card {
+        width: 100% !important;
+    }
+
+    .form-grid, 
+    .form-row-inline {
+        display: block !important;
+    }
+
+    .form-col {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    #task-list {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 12px 16px;
+    }
+
+    header button#theme-toggle {
+        margin-top: 8px;
+    }
+}
