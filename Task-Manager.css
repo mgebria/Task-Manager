@@ -592,10 +592,21 @@ html[data-theme="dark"] .task-animate {
     align-items: stretch;
   }
 
+  /* აი ესაა მთავარი გასწორება */
   .filters-row label,
   .filters-row2 label {
     width: 100%;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;      /* ტექსტი ზემოთ, ველი ქვემოთ */
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  /* ველებს მივცეთ სრული სიგანე */
+  .filters-row input[type="text"],
+  .filters-row select,
+  .filters-row2 select {
+    width: 100%;
   }
 
   .form-row-inline {
@@ -631,3 +642,4 @@ html[data-theme="dark"] .task-animate {
     font-size: 10px;
   }
 }
+
