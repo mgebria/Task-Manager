@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Manager – სახურავის სამუშაოები (Web ვერსია)</title>
   <link rel="stylesheet" href="Task-Manager.css">
+  <!-- Icon set -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
 <header>
   <span>Task Manager – სახურავის სამუშაოები (Web ვერსია)</span>
-  <button id="theme-toggle" class="theme-toggle-btn">Dark</button>
+  <button id="theme-toggle" class="theme-toggle-btn"><i class="ri-moon-line"></i> Dark</button>
 </header>
 <main>
   <div class="layout">
@@ -19,11 +21,14 @@
       <h2>დავალებების სია</h2>
 
       <div class="filters-row">
-        <label>
+        <label style="min-width:200px;">
+          <i class="ri-search-line"></i>
           ძებნა:
           <input type="text" id="search" class="small-input" placeholder="სათაური ან აღწერა">
         </label>
+
         <label>
+          <i class="ri-sort-desc"></i>
           დალაგება:
           <select id="sort" class="small-input">
             <option>დამატების რიგით</option>
@@ -32,31 +37,15 @@
             <option>პრიორიტეტით</option>
           </select>
         </label>
-        <label class="checkbox-wrap">
-  <input type="checkbox" id="only-active">
-  მხოლოდ აქტიური
-</label>
 
-<label class="checkbox-wrap">
-  <input type="checkbox" id="show-deleted">
-  ნაგავი
-</label>
-
-      </div>
-
-      <div class="filters-row2">
         <label>
-          დრო:
-          <select id="date-filter" class="small-input">
+          <i class="ri-filter-2-line"></i>
+          სტატუსი:
+          <select id="status-filter" class="small-input">
             <option value="all">ყველა</option>
-            <option value="today">დღეს</option>
-            <option value="week">ამ კვირაში</option>
-          </select>
-        </label>
-        <label>
-          პროექტი:
-          <select id="project-filter" class="small-input">
-            <option value="all">ყველა</option>
+            <option value="current">მიმდინარე</option>
+            <option value="done">შესრულებული</option>
+            <option value="deleted">წაშლილი</option>
           </select>
         </label>
       </div>
@@ -65,15 +54,13 @@
 
       <div class="details" id="details-box">
         <h3>დეტალები</h3>
-        <p><strong>დასახელება:</strong> <span id="d-title">-</span></p>
-        <p><strong>საწყისი ვადა:</strong> <span id="d-start">-</span></p>
-        <p><strong>დედლაინი:</strong> <span id="d-due">-</span></p>
-        <p><strong>სტატუსი:</strong> <span id="d-status">-</span></p>
-        <p><strong>პროექტი:</strong> <span id="d-project">-</span></p>
-        <p><strong>პასუხისმგებელი:</strong> <span id="d-resp">-</span></p>
-        <p><strong>გამეორება:</strong> <span id="d-repeat">-</span></p>
-        <p><strong>აღწერა:</strong></p>
-        <p id="d-desc">-</p>
+        <p><strong>დასახელება:</strong> <span id="d-title"> -</span></p>
+        <p><strong>საწყისი ვადა:</strong> <span id="d-start"> -</span></p>
+        <p><strong>დედלייןი:</strong> <span id="d-due"> -</span></p>
+        <p><strong>სტატუსი:</strong> <span id="d-status"> -</span></p>
+        <p><strong>პროჯექტი:</strong> <span id="d-project"> -</span></p>
+        <p><strong>აღწერა:</strong> <span id="d-desc"> -</span></p>
+        <p><strong>თანხა:</strong> <span id="d-amount"> -</span></p>
       </div>
 
       <div class="status-bar" id="status-bar">
@@ -112,52 +99,74 @@
             </select>
           </div>
 
+          <!-- TASK STATUS: use keys as values -->
+          <div class="form-row">
+            <label for="task-status">სტატუსი:</label>
+            <select id="task-status" required>
+              <option value="pending">ასაწყობია</option>
+              <option value="assembled">აწყობილია</option>
+              <option value="sent">გაგზავნილია</option>
+              <option value="signed">ხელმოწერილია</option>
+              <option value="uploaded">ატვირთულია</option>
+            </select>
+          </div>
+
           <div class="form-row">
             <label for="project">პროექტი:</label>
-            <input type="text" id="project" placeholder="მაგ: სახურავი, კლიენტი X" required>
-          </div>
-
-          <div class="form-row">
-            <label for="responsible-name">პასუხისმგებელი პირი:</label>
-            <input type="text" id="responsible-name" placeholder="სახელი / გვარი" required>
-          </div>
-
-          <div class="form-row">
-            <label for="responsible-phone">ტელეფონის ნომერი (WhatsApp):</label>
-            <input type="text" id="responsible-phone" placeholder="+9955XXXXXXXX">
-          </div>
-
-          <div class="form-row">
-            <label for="repeat">გამეორება:</label>
-            <select id="repeat" required>
-              <option value="none">არა</option>
-              <option value="daily">ყოველდღე</option>
-              <option value="weekly">ყოველ კვირა</option>
-              <option value="monthly">ყოველ თვე</option>
+            <select id="project" required>
+              <option value="">აირჩიე...</option>
+              <option value="A ბლოკი">A ბლოკი</option>
+              <option value="B ბლოკი">B ბლოკი</option>
+              <option value="C ბლოკი">C ბლოკი</option>
+              <option value="other">სხვა</option>
             </select>
+
+            <!-- ეს ველი იხელმძღვანელებს მხოლოდ "სხვა" არჩევისას -->
+            <label for="project-other"></label>
+            <input type="text" id="project-other" placeholder="ჩაწერე პროექტი..." style="display:none; margin-top:6px;">
           </div>
 
           <div class="form-row">
             <label for="description">აღწერა:</label>
             <textarea id="description" placeholder="დეტალები..." required></textarea>
           </div>
+
           <div class="form-row">
             <label for="photos">ფოტო(ებ)ის დამატება:</label>
-              <input type="file" id="photos" accept="image/*" multiple>
-            </div>
+            <input type="file" id="photos" accept="image/*" multiple>
+          </div>
+
+          <div class="form-row">
+            <label for="amount">თანხა (GEL):</label>
+            <input type="number" id="amount" step="0.01" placeholder="0.00" min="0">
+          </div>
         </div>
 
         <div class="buttons">
-          <button type="submit" class="btn-primary" id="save-btn">დავალების შენახვა</button>
-          <button type="button" class="btn-secondary" id="clear-btn">ფორმის გასუფთავება</button>
-          <button type="button" class="btn-secondary" id="toggle-done-btn">დასრულებული / აქტიური</button>
-          <button type="button" class="btn-danger" id="delete-btn">წაშლა / ნაგავში გადატანა</button>
+          <button type="submit" class="btn-primary" id="save-btn"><i class="ri-save-3-line"></i> დავალების შენახვა</button>
+          <button type="button" class="btn-secondary" id="clear-btn"><i class="ri-eraser-line"></i> ფორმის გასუფთავება</button>
+          <button type="button" class="btn-secondary" id="toggle-done-btn"><i class="ri-checkbox-circle-line"></i> დასრულებული / აქტიური</button>
+          <button type="button" class="btn-danger" id="delete-btn"><i class="ri-delete-bin-line"></i> წაშლა / ნაგავში გადატანა</button>
         </div>
       </form>
 
       <div class="card dashboard" style="margin-top:8px; padding:8px;">
-        <h2 style="margin-bottom:4px;">მიმოხილვა</h2>
+        <h2 style="margin-bottom:6px;">მიმოხილვა</h2>
+
+        <!-- ჯგუფური კონტროლები: ჩათვლა დასრულებული/ნაგავი -->
+        <div class="toggle-row" style="display:flex; gap:12px; align-items:center; margin-bottom:8px;">
+          <label class="checkbox-wrap" style="align-items:center; gap:6px;">
+            <input type="checkbox" id="include-done" />
+            ჩათვალო დასრულებული თანხები
+          </label>
+          <label class="checkbox-wrap" style="align-items:center; gap:6px;">
+            <input type="checkbox" id="include-deleted" />
+            ჩათვალო ნაგავში თანხები
+          </label>
+        </div>
+
         <p id="dash-total"></p>
+        <p id="dash-amounts" style="font-weight:600;"></p>
         <p id="dash-overdue"></p>
         <p id="dash-today"></p>
         <p id="dash-week"></p>
@@ -167,9 +176,6 @@
   </div>
 </main>
 
-<script src="Task%20Manager.js"></script>
+<script src="Task-Manager.js"></script>
 </body>
 </html>
-
-
-
